@@ -10,30 +10,37 @@ You can bind any function to an named event.
 
 Calling bind() several times on the same name cumulate handlers
 
+<pre>
 <code>
   Hevents.bind('mytest', function(){console.log('AAA')})
   Hevents.bind('mytest', function(){console.log('BBB')})
 </code>
+</pre>
 
 A single handler can be bind to several events
 
+<pre>
 <code>
   Hevents.bind(['persons_new','persons_edit'], function(){console.log('editing a Person')})
 </code>
+</pre>
 
 Fire an event
 =
 Te fire an event, use .call() function or directly call a function with same name as event.
 
+<pre>
 <code>
   Hevents.call('mytest');
   Hevents.mytest();
 </code>
+</pre>
 
 Instanciate a new event stack
 =
 If you want to isolate an event stack in a particular namespace, you can instanciate it.
 
+<pre>
 <code>
   var my_stack=new Hevents();
   
@@ -47,3 +54,4 @@ If you want to isolate an event stack in a particular namespace, you can instanc
   hello from my_stack
   hello from global
 </code>
+</pre>
