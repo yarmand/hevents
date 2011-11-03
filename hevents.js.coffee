@@ -1,6 +1,10 @@
-# Hevents micro framework implement an instanciable event stack
-# Projects home : http://github.com/yarmand/hevents
-# Version 0.1
+`
+/* Hevents micro framework implement an instanciable event stack
+ * Projects home : http://github.com/yarmand/hevents
+ * Version 0.1
+ */
+`
+
 
 window.Hevents=fromPrototype Array,
   bind: (names, fun) ->

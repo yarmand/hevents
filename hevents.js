@@ -1,5 +1,10 @@
 (function() {
-  var fromPrototype, remove_from_chain, single_or_array;
+  
+/* Hevents micro framework implement an instanciable event stack
+ * Projects home : http://github.com/yarmand/hevents
+ * Version 0.1
+ */
+;  var fromPrototype, remove_from_chain, single_or_array;
   window.Hevents = fromPrototype(Array, {
     bind: function(names, fun) {
       var n, previously_registered, _i, _len;
