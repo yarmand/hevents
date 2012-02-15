@@ -1,4 +1,4 @@
-Hevents: an instanciable event stack
+Hevents: an singleton event stack
 =
 Introduction
 =
