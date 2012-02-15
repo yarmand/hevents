@@ -36,6 +36,7 @@ Te fire an event, use .call() function or directly call a function with same nam
 </code>
 </pre>
 
+<!-->
 Instanciate a new event stack
 =
 If you want to isolate an event stack in a particular namespace, you can instanciate it.
@@ -55,3 +56,5 @@ If you want to isolate an event stack in a particular namespace, you can instanc
   hello from global
 </code>
 </pre>
+-->
+
