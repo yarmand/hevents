@@ -4,23 +4,38 @@
  * Version 0.1
  */
 `
-
+# From http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
+fromPrototype = (prototype, object) ->
+  newObject = Object.create(prototype)
+  `for(prop in object)
+    {
+      if(object.hasOwnProperty(prop))
+        newObject[prop] = object[prop];
+    }`
+  return newObject
 
 window.Hevents=fromPrototype Array,
   bind: (names, fun) ->
-    names = single_or_array(names)
-    for n in names
-      previously_registered=this[n]
-      this[n]=() ->
+    if(typeof(names.forEach) != 'undefined')
+      names.forEach (name) ->
+        Hevents.bind(name,fun)
+    else
+      previously_registered=this[names]
+      this[names]=() ->
         if(typeof(previously_registered) != 'undefined')
           previously_registered.call()
         fun.call()
-    return fun
+    
+    #names = single_or_array(names)
+    #for n in names
+    #  previously_registered=@[n]
+    #  @[n]=() ->
+    #    previously_registered.call() if typeof(previously_registered) isnt 'undefined'
+    #    fun.call()
+    #return fun
 
-  call: (name) ->
-    if(typeof(this[name]) != 'undefined')
-      this[name]()
-
+  call: (name) -> @[name]() if typeof(@[name]) isnt 'undefined'
+  
   unbind: (names,fun) ->
     names = single_or_array(names)
     for n in names
@@ -42,12 +57,4 @@ single_or_array = (names) ->
     names=[n]
   return names
   
-# From http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
-fromPrototype = (prototype, object) ->
-  newObject = Object.create(prototype)
-  `for(prop in object)
-    {
-      if(object.hasOwnProperty(prop))
-        newObject[prop] = object[prop];
-    }`
-  return newObject
+
