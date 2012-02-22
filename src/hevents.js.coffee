@@ -1,4 +1,5 @@
 ###
+#
  Hevents micro framework implement an instanciable event stack
  Projects home : http://github.com/yarmand/hevents
  Version: 0.6
@@ -12,10 +13,6 @@
   if(typeof define == 'function' && define.amd)
     ### amd ###
     define(factory)
-    true
-  else if(typeof document == 'undefined' && typeof module == 'object')
-    ### node ###
-    module.exports = factory()
     true
   else
     ### DOM ###
