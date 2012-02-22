@@ -1,8 +1,8 @@
-Hevents: an singleton event stack
+Hevents: an instanciable event stack
 =
 Introduction
 =
-The purpose of Hevents is to make easy communication between pieces of code which don't live in the same source file.
+The purpose of Hevents is to make easy communication between pieces of code which don't live in the same name space.
 
 Bind event handler
 =
@@ -36,14 +36,13 @@ Te fire an event, use .call() function or directly call a function with same nam
 </code>
 </pre>
 
-<!-->
 Instanciate a new event stack
 =
 If you want to isolate an event stack in a particular namespace, you can instanciate it.
 
 <pre>
 <code>
-  var my_stack=new Hevents();
+  var my_stack=Hevents.new();
   
   my_stack.bind('hello', function(){console.log('hello from my_stack')})
   Hevents.bind('hello', function(){console.log('hello from global')})
@@ -56,5 +55,4 @@ If you want to isolate an event stack in a particular namespace, you can instanc
   hello from global
 </code>
 </pre>
--->
 

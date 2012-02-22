@@ -1,0 +1,20 @@
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hevents Unit Tests</title>
+
+    <script src="lib/qunit.js"></script>
+    <script src="../lib/hevents.js"></script>
+
+    <script src="tests.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/qunit.css">
+   </head>
+    <body>
+      	<div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+      <script>
+        f=Hevents.bind('a1', function(){console.log("AAA")});f1=Hevents.bind('a1', function(){console.log("BBB")});f2=Hevents.bind('a1', function(){console.log("CCC")});
+      </script>
+    </body>
+</html>

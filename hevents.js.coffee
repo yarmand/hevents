@@ -1,9 +1,15 @@
 `
 /* Hevents micro framework implement an instanciable event stack
  * Projects home : http://github.com/yarmand/hevents
- * Version 0.1
+ * Version 0.5
  */
 `
+
+#if(typeof(top.Hevents) != 'undefined')
+#  console.log("binding top.Hevents to current window")
+#  window.Hevents = top.Hevents
+#  return
+
 # From http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
 fromPrototype = (prototype, object) ->
   newObject = Object.create(prototype)
@@ -13,34 +19,6 @@ fromPrototype = (prototype, object) ->
         newObject[prop] = object[prop];
     }`
   return newObject
-
-window.Hevents=fromPrototype Array,
-  bind: (names, fun) ->
-    if(typeof(names.forEach) != 'undefined')
-      names.forEach (name) ->
-        Hevents.bind(name,fun)
-    else
-      previously_registered=this[names]
-      this[names]=() ->
-        if(typeof(previously_registered) != 'undefined')
-          previously_registered.call()
-        fun.call()
-    
-    #names = single_or_array(names)
-    #for n in names
-    #  previously_registered=@[n]
-    #  @[n]=() ->
-    #    previously_registered.call() if typeof(previously_registered) isnt 'undefined'
-    #    fun.call()
-    #return fun
-
-  call: (name) -> @[name]() if typeof(@[name]) isnt 'undefined'
-  
-  unbind: (names,fun) ->
-    names = single_or_array(names)
-    for n in names
-      this[n] = remove_from_chain(this[n],fun)
-    return this[n]
 
 remove_from_chain = (list, fun) ->
   if(list == fun)
@@ -56,5 +34,35 @@ single_or_array = (names) ->
     n=names
     names=[n]
   return names
+
+window.Hevents=(()->
+  he=fromPrototype Array,
+  bind: (names, fun) ->
+    if(typeof(names.forEach) != 'undefined')
+      names.forEach (name) ->
+        he.bind(name,fun)
+    else
+      previously_registered=this[names]
+      this[names]=() ->
+        if(typeof(previously_registered) != 'undefined')
+          previously_registered.call()
+        fun.call()
+    
+  call: (name) -> @[name]() if typeof(@[name]) isnt 'undefined'
   
+  unbind: (names,fun) ->
+    names = single_or_array(names)
+    for n in names
+      this[n] = remove_from_chain(this[n],fun)
+    return this[n]
+
+  new: () ->
+    Object.create(he)
+
+  ).call(this)
+
+#console.log("binding current window Hevents to top window")
+#top.Hevents = Hevents
+
+ 
 
