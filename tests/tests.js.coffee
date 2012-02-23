@@ -48,4 +48,12 @@ test 'commulative multi events', () ->
   Hevents.cumul_1()
   ok value == "AAABBB", 'value should contains "AAABBB" after calling Hevents.cumul_1() -- value = ' + value
 
+test 'unbind simple', () ->
+  Hevents.bind 'simple_3', () ->
+    "AAA"
+  Hevents.unbind_all 'simple_3'
+  equal typeof Hevents.simple_3, 'undefined', 'Hevents.simple_1 should be undefined'
 
+test 'create a stack', () ->
+  stack_1 = Hevents.new()
+  equal typeof stack_1, 'object', 'stack_1 should be an object'

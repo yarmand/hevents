@@ -54,4 +54,18 @@
     return ok(value === "AAABBB", 'value should contains "AAABBB" after calling Hevents.cumul_1() -- value = ' + value);
   });
 
+  test('unbind simple', function() {
+    Hevents.bind('simple_3', function() {
+      return "AAA";
+    });
+    Hevents.unbind_all('simple_3');
+    return equal(typeof Hevents.simple_3, 'undefined', 'Hevents.simple_1 should be undefined');
+  });
+
+  test('create a stack', function() {
+    var stack_1;
+    stack_1 = Hevents["new"]();
+    return equal(typeof stack_1, 'object', 'stack_1 should be an object');
+  });
+
 }).call(this);

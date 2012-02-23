@@ -46,23 +46,34 @@
       return list.next
     list.next = remove_from_chain(list.next,fun)
     return list
-  he=fromPrototype Array,
+
+  bind_one = (object, name, fun) ->
+    previously_registered=object[name]
+    object[name]=() ->
+      if(typeof(previously_registered) != 'undefined')
+        previously_registered.call()
+      fun.call()
+    object[name].current = fun
+    object[name].next = previously_registered
+
+  unbind_all_one = (object, name) ->
+    object[name] = undefined
+
+  ###
+    following is exported
+  ###
+  fromPrototype Array,
     new: () ->
-      Object.create(he)
+      Object.create(this)
 
     bind: (names, fun) ->
       if(typeof(names.forEach) != 'undefined')
+        self = this
         names.forEach (name) ->
-          he.bind(name,fun)
+          bind_one(self, name, fun)
       else
-        previously_registered=this[names]
-        this[names]=() ->
-          if(typeof(previously_registered) != 'undefined')
-            previously_registered.call()
-          fun.call()
-        this[names].current = fun
-        this[names].next = previously_registered
-        fun
+        bind_one(this, names, fun)
+      fun
 
     bind_before: (names,fun) ->
       console.log('bind_before() :not yet implemented')
@@ -73,15 +84,13 @@
     call: (name) -> 
       @[name]() if typeof(@[name]) isnt 'undefined'
 
-    unbind: (names,fun) ->
-      if(typeof(names.forEach) != 'undefined')
-        names.forEach (name) ->
-          he.bind(name,fun)
-      else
-        this[names] = remove_from_chain(this[names],fun)
-
     unbind_all: (names) ->
-      console.log('unbind_all() :not yet implemented')
+      if(typeof(names.forEach) != 'undefined')
+        self = this
+        names.forEach (name) ->
+          unbind_all_one(self, name)
+      else
+        unbind_all_one(this, names)
 
     unbind_all_before: (names) ->
       console.log('unbind_all_before() :not yet implemented')
